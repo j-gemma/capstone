@@ -35,3 +35,7 @@ num_func_output(2, 'number', 'c')
 # synth.connected(9, 3, 5)
 #
 # synth.connected(10, 1, 9)
+#
+# module.output_type(1, 'c')
+# module.output_type(2, 'c')
+# module.output_type(3, 'c')
