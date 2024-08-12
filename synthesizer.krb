@@ -1,0 +1,6 @@
+#synthesizer.krb
+
+synth_done
+  use synth_connected($graph, true)
+  when
+    synthesizer.
