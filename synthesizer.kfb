@@ -36,6 +36,33 @@ num_func_output(2, 'number', 'c')
 #
 # synth.connected(10, 1, 9)
 #
-# module.output_type(1, 'c')
-# module.output_type(2, 'c')
-# module.output_type(3, 'c')
+# synth.output_type(1, 'c')
+# synth.output_type(2, 'c')
+# synth.output_type(3, 'c')
+#
+# output types!
+#
+# Regardless of index, a module's output types are determined by its input types.
+#
+# Find connections first. There may be modules which are not connected to the 'main' synth
+# (the chain of modules which is connected to the dac)
+#
+# How do we deal with that? Good question.
+#
+# if 
+#   synth.connected(current_module, input_index, connected_module)
+#   
+#   and
+#
+#   synth.output_type(connected_module, $c_or_s)
+#
+# then
+#   synth.input_type(current_module, input_index, $c_or_s)
+#
+#
+#
+#
+#
+#
+#
+#
