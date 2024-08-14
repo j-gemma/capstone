@@ -1,7 +1,7 @@
 # synth.krb
 
 input_type
-  use input_type(current_module, input_index, $c_or_s)
+  use input_type($current_module, $input_index, $type)
   when
-    synth.connected(current_module, input_index, connected_module)
-    synth.output_type(connected_module, $c_or_s)
+    synthesizer.connected($current_module, $input_index, $connected_module)
+    synthesizer.output_type($connected_module, $type)

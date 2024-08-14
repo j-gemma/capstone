@@ -1,12 +1,4 @@
-#synthesizer.kfb
-
-#module 1 is of type number and has output type control
-num_func_output(0, 'number', 'c')
-num_func_output(1, 'number', 'c')
-num_func_output(2, 'number', 'c')
-
-
-# modindex_connectedTo_modIndex_inputIndex(1, 3, 2)
+# synthesizer.kfb
 #
 # synth.connected(current_module, current_input, module_index_connected_to)
 # 
@@ -59,10 +51,11 @@ num_func_output(2, 'number', 'c')
 # then
 #   synth.input_type(current_module, input_index, $c_or_s)
 #
+# if 
+#   module
 #
 #
-#
-#
-#
+# then 
+#   synth.well_defined(graph, True)
 #
 #

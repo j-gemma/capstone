@@ -17,7 +17,7 @@ def input_type(rule, arg_patterns, arg_context):
                  patterns,
                  arg_patterns)):
         rule.rule_base.num_bc_rules_matched += 1
-        with engine.prove('synth', 'connected', context,
+        with engine.prove('synthesizer', 'connected', context,
                           (rule.pattern(0),
                            rule.pattern(1),
                            rule.pattern(2),)) \
@@ -25,7 +25,7 @@ def input_type(rule, arg_patterns, arg_context):
           for x_1 in gen_1:
             assert x_1 is None, \
               "synth.input_type: got unexpected plan from when clause 1"
-            with engine.prove('synth', 'output_type', context,
+            with engine.prove('synthesizer', 'output_type', context,
                               (rule.pattern(2),
                                rule.pattern(3),)) \
               as gen_2:
@@ -43,14 +43,14 @@ def populate(engine):
   
   bc_rule.bc_rule('input_type', This_rule_base, 'input_type',
                   input_type, None,
-                  (pattern.pattern_literal('current_module'),
-                   pattern.pattern_literal('input_index'),
-                   contexts.variable('c_or_s'),),
+                  (contexts.variable('current_module'),
+                   contexts.variable('input_index'),
+                   contexts.variable('type'),),
                   (),
-                  (pattern.pattern_literal('current_module'),
-                   pattern.pattern_literal('input_index'),
-                   pattern.pattern_literal('connected_module'),
-                   contexts.variable('c_or_s'),))
+                  (contexts.variable('current_module'),
+                   contexts.variable('input_index'),
+                   contexts.variable('connected_module'),
+                   contexts.variable('type'),))
 
 
 Krb_filename = '..\\synth.krb'

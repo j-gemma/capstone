@@ -14,9 +14,9 @@ except NameError:
 def get_target_pkg():
     return target_pkg.target_pkg(__name__, __file__, pyke_version, loader, {
          ('', '', 'synth.krb'):
-           [1723577687.1581578, 'synth_bc.py'],
+           [1723658435.1798375, 'synth_bc.py'],
          ('', '', 'synthesizer.kfb'):
-           [1723577687.162094, 'synthesizer.fbc'],
+           [1723658435.1835423, 'synthesizer.fbc'],
         },
         compiler_version)
 

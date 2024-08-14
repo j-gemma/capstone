@@ -33,8 +33,19 @@ def print_connections(processed_synth):
     print('Node {} input 2 connected to node {} output\n'.format(curr, item[2]))
     print('Node {} input 3 connected to node {} output\n'.format(curr, item[3]))
 
-def pyke_connections(processed_synth, pyke_engine):
+def assert_connections(processed_synth, pyke_engine):
   for item in processed_synth:
-    pyke_engine.assert_('synth', 'connected', (item[1], item[2], item[3]))
+    print(item)
+    for i in range(len(item) - 1):
+      curr = item[0]
+      pyke_engine.assert_('synthesizer', 'connected', (curr, i + 1, item[i + 1]))
+      print('Module {} input {} connected to output of module {}'.format(curr, i + 1, item[i + 1]))
 
+  return pyke_engine
+
+def assert_control_inputs(num_inputs, pyke_engine):
+  for i in range(num_inputs):
+    pyke_engine.assert_('synthesizer', 'output_type', (i, 'c'))
+    print('Module {} has output type control'.format(i))
+   
   return pyke_engine
