@@ -5,3 +5,150 @@ input_type
   when
     synthesizer.connected($current_module, $input_index, $connected_module)
     synthesizer.output_type($connected_module, $type)
+
+three_inputs_known
+  use three_inputs($index, $type1, $type2, $type3)
+  when
+    input_type($index, 1, $type)
+    input_type($index, 2, $type)
+    input_type($index, 3, $type)
+
+two_inputs_known
+  use two_inputs($index, $type1, $type2, $type3)
+  when
+    input_type($index, 1, $type)
+    input_type($index, 2, $type)
+
+control_out
+  use output_type($current_module, 'c')
+  when
+    pd_object($index, $id, 'c')
+
+signal_out
+  use output_type($current_module, 's')
+  when
+    pd_object($index, $id, 's')
+
+cc0
+  use pd_object($index, '+', 'c')
+  when
+    gene_value($index, 0)
+    input_types($index, 'c', 'c')
+sc0
+
+cs0
+
+ss0
+
+cc1
+
+sc1
+
+cs1
+
+ss1
+
+cc2
+
+sc2
+
+cs2
+
+ss2
+
+cc3
+
+sc3
+
+cs3
+
+ss3
+
+cc4
+
+sc4
+
+cs4
+
+ss4
+
+cc5
+
+sc5
+
+cs5
+
+ss5
+
+cc6
+
+sc6
+
+cs6
+
+ss6
+
+cc7
+
+sc7
+
+cs7
+
+ss7
+
+cc8
+
+sc8
+
+cs8
+
+ss8
+
+cc9
+
+sc9
+
+cs9
+
+ss9
+
+cc10
+
+sc10
+
+cs10
+
+ss10
+
+cc11
+
+sc11
+
+cs11
+
+ss11
+
+cc12
+
+sc12
+
+cs12
+
+ss12
+
+cc13
+
+sc13
+
+cs13
+
+ss13
+
+cc14
+
+sc14
+
+cs14
+
+ss14
+

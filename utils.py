@@ -1,4 +1,4 @@
-#synth_utils.py
+#utils.py
 
 def process_synth(synth):
   """Processes the synth list, replacing relative addresses with actual node indices.
@@ -15,8 +15,8 @@ def process_synth(synth):
 
   for i in range(3, graph_length - 1):  # Skip first 3 and last elements
     node_data = synth[i][1:4]  # Extract relative addresses
-#   print(node_data)
-    processed_node_data = [i]
+    print([i])
+    processed_node_data = [i, synth[i][0]]
     for address in node_data:
       if address <= i:
         processed_node_data.append(i - address)  # Replace with actual index
@@ -29,16 +29,16 @@ def process_synth(synth):
 def print_connections(processed_synth):
   for item in processed_synth:
     curr = item[0]
-    print('Node {} input 1 connected to node {} output\n'.format(curr, item[1]))
-    print('Node {} input 2 connected to node {} output\n'.format(curr, item[2]))
-    print('Node {} input 3 connected to node {} output\n'.format(curr, item[3]))
+#    print('Node {} input 1 connected to node {} output\n'.format(curr, item[1]))
+#    print('Node {} input 2 connected to node {} output\n'.format(curr, item[2]))
+#    print('Node {} input 3 connected to node {} output\n'.format(curr, item[3]))
 
 def assert_connections(processed_synth, pyke_engine):
   for item in processed_synth:
     print(item)
-    for i in range(len(item) - 1):
+    for i in range(len(item) - 2):
       curr = item[0]
-      pyke_engine.assert_('synthesizer', 'connected', (curr, i + 1, item[i + 1]))
+      pyke_engine.assert_('synthesizer', 'connected', (curr, i + 1, item[i + 2]))
       print('Module {} input {} connected to output of module {}'.format(curr, i + 1, item[i + 1]))
 
   return pyke_engine
