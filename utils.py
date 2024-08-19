@@ -15,7 +15,7 @@ def process_synth(synth):
 
   for i in range(3, graph_length - 1):  # Skip first 3 and last elements
     node_data = synth[i][1:4]  # Extract relative addresses
-    print([i])
+#    print([i])
     processed_node_data = [i, synth[i][0]]
     for address in node_data:
       if address <= i:
@@ -35,17 +35,24 @@ def print_connections(processed_synth):
 
 def assert_connections(processed_synth, pyke_engine):
   for item in processed_synth:
-    print(item)
+    #print(item)
     for i in range(len(item) - 2):
       curr = item[0]
       pyke_engine.assert_('synthesizer', 'connected', (curr, i + 1, item[i + 2]))
-      print('Module {} input {} connected to output of module {}'.format(curr, i + 1, item[i + 1]))
+      #print('Module {} input {} connected to output of module {}'.format(curr, i + 1, item[i + 1]))
 
   return pyke_engine
 
 def assert_control_inputs(num_inputs, pyke_engine):
   for i in range(num_inputs):
     pyke_engine.assert_('synthesizer', 'output_type', (i, 'c'))
-    print('Module {} has output type control'.format(i))
+    #print('Module {} has output type control'.format(i))
    
   return pyke_engine
+
+def assert_gene_types(synth, num_inputs, pyke_engine):
+  for i in range(len(synth) - num_inputs - 1):
+    pyke_engine.assert_('synthesizer', 'gene_value', (i + num_inputs, synth[i + num_inputs][0]))
+
+  return pyke_engine
+

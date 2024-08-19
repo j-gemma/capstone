@@ -1,23 +1,33 @@
 # synth.krb
 
-input_type
+in_type
   use input_type($current_module, $input_index, $type)
   when
     synthesizer.connected($current_module, $input_index, $connected_module)
     synthesizer.output_type($connected_module, $type)
 
-three_inputs_known
+three_inputs
   use three_inputs($index, $type1, $type2, $type3)
   when
-    input_type($index, 1, $type)
-    input_type($index, 2, $type)
-    input_type($index, 3, $type)
+    input_type($index, 1, $type1)
+    input_type($index, 2, $type2)
+    input_type($index, 3, $type3)
 
-two_inputs_known
-  use two_inputs($index, $type1, $type2, $type3)
+two_inputs
+  use input_types($current_module, $type1, $type2)
   when
-    input_type($index, 1, $type)
-    input_type($index, 2, $type)
+    input_type($current_module, 1, $type1)
+    input_type($current_module, 2, $type2)
+
+param_s
+  use output_type($current_module, 's')
+  when
+    synthesizer.output_type($current_module, 's')
+
+param_c
+  use output_type($current_module, 'c')
+  when
+    synthesizer.output_type($current_module, 'c')
 
 control_out
   use output_type($current_module, 'c')
@@ -32,123 +42,303 @@ signal_out
 cc0
   use pd_object($index, '+', 'c')
   when
-    gene_value($index, 0)
+    synthesizer.gene_value($index, 0)
     input_types($index, 'c', 'c')
+
 sc0
+  use pd_object($index, '+~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 's', 'c')
 
 cs0
+  use pd_object($index, '+~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 'c', 's')
 
 ss0
+  use pd_object($index, '+~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 's', 's')
 
 cc1
+  use pd_object($index, '-', 'c')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 'c', 'c')
 
 sc1
+  use pd_object($index, '-~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 's', 'c')
 
 cs1
+  use pd_object($index, '-~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 'c', 's')
 
 ss1
+  use pd_object($index, '-~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 's', 's')
 
 cc2
+  use pd_object($index, '*', 'c')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 'c', 'c')
 
 sc2
+  use pd_object($index, '*~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 's', 'c')
 
 cs2
+  use pd_object($index, '*~', 's')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 'c', 's')
 
 ss2
+  use pd_object($index, '*~', 'c')
+  when
+    synthesizer.gene_value($index, 0)
+    input_types($index, 's', 's')
 
 cc3
+  use pd_object($index, '/', 'c')
+  when
+    synthesizer.gene_value($index, 3)
+    input_types($index, 'c', 'c')
 
 sc3
+  use pd_object($index, '/~', 's')
+  when
+    synthesizer.gene_value($index, 3)
+    input_types($index, 's', 'c')
 
 cs3
+  use pd_object($index, '/~', 's')
+  when
+    synthesizer.gene_value($index, 3)
+    input_types($index, 'c', 's')
 
 ss3
+  use pd_object($index, '/~', 's')
+  when
+    synthesizer.gene_value($index, 3)
+    input_types($index, 's', 's')
 
 cc4
+  use pd_object($index, 'osc', 'c')
+  when
+    synthesizer.gene_value($index, 4)
+    input_types($index, 'c', 'c')
 
 sc4
+  use pd_object($index, 'osc~', 's')
+  when
+    synthesizer.gene_value($index, 4)
+    input_types($index, 's', 'c')
 
 cs4
+  use pd_object($index, 'osc~', 's')
+  when
+    synthesizer.gene_value($index, 4)
+    input_types($index, 'c', 's')
 
 ss4
+  use pd_object($index, 'osc~', 's')
+  when
+    synthesizer.gene_value($index, 4)
+    input_types($index, 's', 's')
 
-cc5
+cos
+  use pd_object($index, 'cos~', 's')
+  when
+    synthesizer.gene_value($index, 5)
 
-sc5
+phasor
+  use pd_object($index, 'phasor~', 's')
+  when
+    synthesizer.gene_value($index, 6)
+    input_types($index, 'c', $type2)
 
-cs5
-
-ss5
-
-cc6
-
-sc6
-
-cs6
-
-ss6
-
-cc7
-
-sc7
-
-cs7
-
-ss7
+noise
+  use pd_object($index, 'noise~', 's')
+  when
+    synthesizer.gene_value($index, 7)
 
 cc8
+  use pd_object($index, 'lop', 'c')
+  when
+    synthesizer.gene_value($index, 8)
+    input_types($index, 'c', 'c')
 
 sc8
+  use pd_object($index, 'lop~', 's')
+  when
+    synthesizer.gene_value($index, 8)
+    input_types($index, 's', 'c')
 
 cs8
+  use pd_object($index, 'lop~', 's')
+  when
+    synthesizer.gene_value($index, 8)
+    input_types($index, 'c', 's')
 
 ss8
+  use pd_object($index, 'lop~', 's')
+  when
+    synthesizer.gene_value($index, 8)
+    input_types($index, 's', 's')
 
 cc9
+  use pd_object($index, 'hip', 'c')
+  when
+    synthesizer.gene_value($index, 9)
+    input_types($index, 'c', 'c')
 
 sc9
+  use pd_object($index, 'hip~', 's')
+  when
+    synthesizer.gene_value($index, 9)
+    input_types($index, 's', 'c')
 
 cs9
+  use pd_object($index, 'hip~', 's')
+  when
+    synthesizer.gene_value($index, 9)
+    input_types($index, 'c', 's')
 
 ss9
+  use pd_object($index, 'hip~', 's')
+  when
+    synthesizer.gene_value($index, 9)
+    input_types($index, 's', 's')
 
 cc10
+  use pd_object($index, 'vcf', 'c')
+  when
+    synthesizer.gene_value($index, 10)
+    input_types($index, 'c', 'c')
 
 sc10
+  use pd_object($index, 'vcf~', 's')
+  when
+    synthesizer.gene_value($index, 10)
+    input_types($index, 's', 'c')
 
 cs10
+  use pd_object($index, 'vcf~', 's')
+  when
+    synthesizer.gene_value($index, 10)
+    input_types($index, 'c', 's')
 
 ss10
+  use pd_object($index, 'vcf~', 's')
+  when
+    synthesizer.gene_value($index, 10)
+    input_types($index, 's', 's')
 
 cc11
+  use pd_object($index, '+', 'c')
+  when
+    synthesizer.gene_value($index, 11)
+    input_types($index, 'c', 'c')
 
 sc11
+  use pd_object($index, '+~', 's')
+  when
+    synthesizer.gene_value($index, 11)
+    input_types($index, 's', 'c')
 
 cs11
+  use pd_object($index, '+~', 's')
+  when
+    synthesizer.gene_value($index, 11)
+    input_types($index, 'c', 's')
 
 ss11
+  use pd_object($index, '+~', 's')
+  when
+    synthesizer.gene_value($index, 11)
+    input_types($index, 's', 's')
 
 cc12
+  use pd_object($index, '-', 'c')
+  when
+    synthesizer.gene_value($index, 12)
+    input_types($index, 'c', 'c')
 
 sc12
+  use pd_object($index, '-~', 's')
+  when
+    synthesizer.gene_value($index, 12)
+    input_types($index, 's', 'c')
 
 cs12
+  use pd_object($index, '-~', 's')
+  when
+    synthesizer.gene_value($index, 12)
+    input_types($index, 'c', 's')
 
 ss12
+  use pd_object($index, '-~', 's')
+  when
+    synthesizer.gene_value($index, 12)
+    input_types($index, 's', 's')
 
 cc13
+  use pd_object($index, '*', 'c')
+  when
+    synthesizer.gene_value($index, 13)
+    input_types($index, 'c', 'c')
 
 sc13
+  use pd_object($index, '*~', 's')
+  when
+    synthesizer.gene_value($index, 13)
+    input_types($index, 's', 'c')
 
 cs13
+  use pd_object($index, '*~', 's')
+  when
+    synthesizer.gene_value($index, 13)
+    input_types($index, 'c', 's')
 
 ss13
+  use pd_object($index, '*~', 's')
+  when
+    synthesizer.gene_value($index, 13)
+    input_types($index, 's', 's')
 
 cc14
+  use pd_object($index, '/', 'c')
+  when
+    synthesizer.gene_value($index, 14)
+    input_types($index, 'c', 'c')
 
 sc14
+  use pd_object($index, '/~', 's')
+  when
+    synthesizer.gene_value($index, 14)
+    input_types($index, 's', 'c')
 
 cs14
+  use pd_object($index, '/~', 's')
+  when
+    synthesizer.gene_value($index, 14)
+    input_types($index, 'c', 's')
 
 ss14
-
+  use pd_object($index, '/~', 's')
+  when
+    synthesizer.gene_value($index, 14)
+    input_types($index, 's', 's')
