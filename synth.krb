@@ -1,10 +1,26 @@
 # synth.krb
 
-in_type
-  use input_type($current_module, $input_index, $type)
+
+complete_module2
+  use complete_module2($index, $type1, $connected_module1, $type2, $connected_module2, $pd_object, $gene_value, $output_type)
+  when 
+    input_type($index, 1, $type1, $connected_module1)
+    input_type($index, 2, $type2, $connected_module2)
+    pd_object($index, $pd_object, $output_type)
+    synthesizer.gene_value($index, $gene_value)
+    output_type($index, $type)
+
+param_in
+  use input_type($current_module, $input_index, $type, $connected_module)
   when
     synthesizer.connected($current_module, $input_index, $connected_module)
     synthesizer.output_type($connected_module, $type)
+
+in_type
+  use input_type($current_module, $input_index, $type, $connected_module)
+  when
+    synthesizer.connected($current_module, $input_index, $connected_module)
+    output_type($connected_module, $type)
 
 three_inputs
   use three_inputs($index, $type1, $type2, $type3)
@@ -16,8 +32,14 @@ three_inputs
 two_inputs
   use input_types($current_module, $type1, $type2)
   when
-    input_type($current_module, 1, $type1)
-    input_type($current_module, 2, $type2)
+    input_type($current_module, 1, $type1, $connection1)
+    input_type($current_module, 2, $type2, $connection2)
+
+heck
+  use input_types_connections($current_module, $type1, $connection1, $type2, $connection2)
+  when
+    input_type($current_module, 1, $type1, $connection1)
+    input_type($current_module, 2, $type2, $connection2)
 
 param_s
   use output_type($current_module, 's')
@@ -30,12 +52,12 @@ param_c
     synthesizer.output_type($current_module, 'c')
 
 control_out
-  use output_type($current_module, 'c')
+  use output_type($index, 'c')
   when
     pd_object($index, $id, 'c')
 
 signal_out
-  use output_type($current_module, 's')
+  use output_type($index, 's')
   when
     pd_object($index, $id, 's')
 
