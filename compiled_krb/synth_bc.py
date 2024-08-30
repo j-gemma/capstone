@@ -5,6 +5,60 @@ from pyke import contexts, pattern, bc_rule
 pyke_version = '1.1.1'
 compiler_version = 1
 
+def test_complete_module2(rule, arg_patterns, arg_context):
+  engine = rule.rule_base.engine
+  patterns = rule.goal_arg_patterns()
+  if len(arg_patterns) == len(patterns):
+    context = contexts.bc_context(rule)
+    try:
+      if all(map(lambda pat, arg:
+                   pat.match_pattern(context, context,
+                                     arg, arg_context),
+                 patterns,
+                 arg_patterns)):
+        rule.rule_base.num_bc_rules_matched += 1
+        with engine.prove(rule.rule_base.root_name, 'input_types_connections', context,
+                          (rule.pattern(0),
+                           rule.pattern(1),
+                           rule.pattern(2),
+                           rule.pattern(3),
+                           rule.pattern(4),)) \
+          as gen_1:
+          for x_1 in gen_1:
+            assert x_1 is None, \
+              "synth.test_complete_module2: got unexpected plan from when clause 1"
+            rule.rule_base.num_bc_rule_successes += 1
+            yield
+        rule.rule_base.num_bc_rule_failures += 1
+    finally:
+      context.done()
+
+def test_pd_obj(rule, arg_patterns, arg_context):
+  engine = rule.rule_base.engine
+  patterns = rule.goal_arg_patterns()
+  if len(arg_patterns) == len(patterns):
+    context = contexts.bc_context(rule)
+    try:
+      if all(map(lambda pat, arg:
+                   pat.match_pattern(context, context,
+                                     arg, arg_context),
+                 patterns,
+                 arg_patterns)):
+        rule.rule_base.num_bc_rules_matched += 1
+        with engine.prove(rule.rule_base.root_name, 'pd_object', context,
+                          (rule.pattern(0),
+                           rule.pattern(1),
+                           rule.pattern(2),)) \
+          as gen_1:
+          for x_1 in gen_1:
+            assert x_1 is None, \
+              "synth.test_pd_obj: got unexpected plan from when clause 1"
+            rule.rule_base.num_bc_rule_successes += 1
+            yield
+        rule.rule_base.num_bc_rule_failures += 1
+    finally:
+      context.done()
+
 def complete_module2(rule, arg_patterns, arg_context):
   engine = rule.rule_base.engine
   patterns = rule.goal_arg_patterns()
@@ -17,81 +71,40 @@ def complete_module2(rule, arg_patterns, arg_context):
                  patterns,
                  arg_patterns)):
         rule.rule_base.num_bc_rules_matched += 1
-        with engine.prove(rule.rule_base.root_name, 'input_type', context,
+        with engine.prove(rule.rule_base.root_name, 'input_types_connections', context,
                           (rule.pattern(0),
                            rule.pattern(1),
                            rule.pattern(2),
-                           rule.pattern(3),)) \
+                           rule.pattern(3),
+                           rule.pattern(4),)) \
           as gen_1:
           for x_1 in gen_1:
             assert x_1 is None, \
               "synth.complete_module2: got unexpected plan from when clause 1"
-            with engine.prove(rule.rule_base.root_name, 'input_type', context,
+            with engine.prove(rule.rule_base.root_name, 'pd_object', context,
                               (rule.pattern(0),
-                               rule.pattern(4),
                                rule.pattern(5),
                                rule.pattern(6),)) \
               as gen_2:
               for x_2 in gen_2:
                 assert x_2 is None, \
                   "synth.complete_module2: got unexpected plan from when clause 2"
-                with engine.prove(rule.rule_base.root_name, 'pd_object', context,
+                with engine.prove('synthesizer', 'gene_value', context,
                                   (rule.pattern(0),
-                                   rule.pattern(7),
-                                   rule.pattern(8),)) \
+                                   rule.pattern(7),)) \
                   as gen_3:
                   for x_3 in gen_3:
                     assert x_3 is None, \
                       "synth.complete_module2: got unexpected plan from when clause 3"
-                    with engine.prove('synthesizer', 'gene_value', context,
+                    with engine.prove(rule.rule_base.root_name, 'output_type', context,
                                       (rule.pattern(0),
-                                       rule.pattern(9),)) \
+                                       rule.pattern(8),)) \
                       as gen_4:
                       for x_4 in gen_4:
                         assert x_4 is None, \
                           "synth.complete_module2: got unexpected plan from when clause 4"
-                        with engine.prove(rule.rule_base.root_name, 'output_type', context,
-                                          (rule.pattern(0),
-                                           rule.pattern(10),)) \
-                          as gen_5:
-                          for x_5 in gen_5:
-                            assert x_5 is None, \
-                              "synth.complete_module2: got unexpected plan from when clause 5"
-                            rule.rule_base.num_bc_rule_successes += 1
-                            yield
-        rule.rule_base.num_bc_rule_failures += 1
-    finally:
-      context.done()
-
-def param_in(rule, arg_patterns, arg_context):
-  engine = rule.rule_base.engine
-  patterns = rule.goal_arg_patterns()
-  if len(arg_patterns) == len(patterns):
-    context = contexts.bc_context(rule)
-    try:
-      if all(map(lambda pat, arg:
-                   pat.match_pattern(context, context,
-                                     arg, arg_context),
-                 patterns,
-                 arg_patterns)):
-        rule.rule_base.num_bc_rules_matched += 1
-        with engine.prove('synthesizer', 'connected', context,
-                          (rule.pattern(0),
-                           rule.pattern(1),
-                           rule.pattern(2),)) \
-          as gen_1:
-          for x_1 in gen_1:
-            assert x_1 is None, \
-              "synth.param_in: got unexpected plan from when clause 1"
-            with engine.prove('synthesizer', 'output_type', context,
-                              (rule.pattern(2),
-                               rule.pattern(3),)) \
-              as gen_2:
-              for x_2 in gen_2:
-                assert x_2 is None, \
-                  "synth.param_in: got unexpected plan from when clause 2"
-                rule.rule_base.num_bc_rule_successes += 1
-                yield
+                        rule.rule_base.num_bc_rule_successes += 1
+                        yield
         rule.rule_base.num_bc_rule_failures += 1
     finally:
       context.done()
@@ -2015,6 +2028,30 @@ def ss14(rule, arg_patterns, arg_context):
 def populate(engine):
   This_rule_base = engine.get_create('synth')
   
+  bc_rule.bc_rule('test_complete_module2', This_rule_base, 'acomplete_module2',
+                  test_complete_module2, None,
+                  (contexts.variable('index'),
+                   contexts.variable('type1'),
+                   contexts.variable('connected_module1'),
+                   contexts.variable('type2'),
+                   contexts.variable('connected_module2'),),
+                  (),
+                  (contexts.variable('index'),
+                   contexts.variable('type1'),
+                   contexts.variable('connected_module1'),
+                   contexts.variable('type2'),
+                   contexts.variable('connected_module2'),))
+  
+  bc_rule.bc_rule('test_pd_obj', This_rule_base, 'bcomplete_module2',
+                  test_pd_obj, None,
+                  (contexts.variable('index'),
+                   contexts.variable('pd_object'),
+                   contexts.variable('output_type'),),
+                  (),
+                  (contexts.variable('index'),
+                   contexts.variable('pd_object'),
+                   pattern.pattern_literal('output_type'),))
+  
   bc_rule.bc_rule('complete_module2', This_rule_base, 'complete_module2',
                   complete_module2, None,
                   (contexts.variable('index'),
@@ -2027,27 +2064,13 @@ def populate(engine):
                    contexts.variable('output_type'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(1),
                    contexts.variable('type1'),
                    contexts.variable('connected_module1'),
-                   pattern.pattern_literal(2),
                    contexts.variable('type2'),
                    contexts.variable('connected_module2'),
                    contexts.variable('pd_object'),
                    contexts.variable('output_type'),
                    contexts.variable('gene_value'),
-                   contexts.variable('type'),))
-  
-  bc_rule.bc_rule('param_in', This_rule_base, 'input_type',
-                  param_in, None,
-                  (contexts.variable('current_module'),
-                   contexts.variable('input_index'),
-                   contexts.variable('type'),
-                   contexts.variable('connected_module'),),
-                  (),
-                  (contexts.variable('current_module'),
-                   contexts.variable('input_index'),
-                   contexts.variable('connected_module'),
                    contexts.variable('type'),))
   
   bc_rule.bc_rule('in_type', This_rule_base, 'input_type',
@@ -2190,7 +2213,7 @@ def populate(engine):
                    pattern.pattern_literal('c'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(1),
                    pattern.pattern_literal('c'),))
   
   bc_rule.bc_rule('sc1', This_rule_base, 'pd_object',
@@ -2200,7 +2223,7 @@ def populate(engine):
                    pattern.pattern_literal('s'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(1),
                    pattern.pattern_literal('s'),
                    pattern.pattern_literal('c'),))
   
@@ -2211,7 +2234,7 @@ def populate(engine):
                    pattern.pattern_literal('s'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(1),
                    pattern.pattern_literal('c'),
                    pattern.pattern_literal('s'),))
   
@@ -2222,7 +2245,7 @@ def populate(engine):
                    pattern.pattern_literal('s'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(1),
                    pattern.pattern_literal('s'),))
   
   bc_rule.bc_rule('cc2', This_rule_base, 'pd_object',
@@ -2232,7 +2255,7 @@ def populate(engine):
                    pattern.pattern_literal('c'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(2),
                    pattern.pattern_literal('c'),))
   
   bc_rule.bc_rule('sc2', This_rule_base, 'pd_object',
@@ -2242,7 +2265,7 @@ def populate(engine):
                    pattern.pattern_literal('s'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(2),
                    pattern.pattern_literal('s'),
                    pattern.pattern_literal('c'),))
   
@@ -2253,7 +2276,7 @@ def populate(engine):
                    pattern.pattern_literal('s'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(2),
                    pattern.pattern_literal('c'),
                    pattern.pattern_literal('s'),))
   
@@ -2264,7 +2287,7 @@ def populate(engine):
                    pattern.pattern_literal('c'),),
                   (),
                   (contexts.variable('index'),
-                   pattern.pattern_literal(0),
+                   pattern.pattern_literal(2),
                    pattern.pattern_literal('s'),))
   
   bc_rule.bc_rule('cc3', This_rule_base, 'pd_object',
@@ -2677,185 +2700,185 @@ def populate(engine):
 
 Krb_filename = '..\\synth.krb'
 Krb_lineno_map = (
-    ((14, 18), (5, 5)),
-    ((20, 28), (7, 7)),
-    ((29, 37), (8, 8)),
-    ((38, 45), (9, 9)),
-    ((46, 52), (10, 10)),
-    ((53, 59), (11, 11)),
-    ((72, 76), (14, 14)),
-    ((78, 85), (16, 16)),
-    ((86, 92), (17, 17)),
-    ((105, 109), (20, 20)),
-    ((111, 118), (22, 22)),
-    ((119, 125), (23, 23)),
-    ((138, 142), (26, 26)),
-    ((144, 151), (28, 28)),
-    ((152, 159), (29, 29)),
-    ((160, 167), (30, 30)),
-    ((180, 184), (33, 33)),
-    ((186, 194), (35, 35)),
-    ((195, 203), (36, 36)),
-    ((216, 220), (39, 39)),
-    ((222, 230), (41, 41)),
-    ((231, 239), (42, 42)),
-    ((252, 256), (45, 45)),
-    ((258, 264), (47, 47)),
-    ((277, 281), (50, 50)),
-    ((283, 289), (52, 52)),
-    ((302, 306), (55, 55)),
-    ((308, 315), (57, 57)),
-    ((328, 332), (60, 60)),
-    ((334, 341), (62, 62)),
-    ((354, 358), (65, 65)),
-    ((360, 366), (67, 67)),
-    ((367, 374), (68, 68)),
-    ((387, 391), (71, 71)),
-    ((393, 399), (73, 73)),
-    ((400, 407), (74, 74)),
-    ((420, 424), (77, 77)),
-    ((426, 432), (79, 79)),
-    ((433, 440), (80, 80)),
-    ((453, 457), (83, 83)),
-    ((459, 465), (85, 85)),
-    ((466, 473), (86, 86)),
-    ((486, 490), (89, 89)),
-    ((492, 498), (91, 91)),
-    ((499, 506), (92, 92)),
-    ((519, 523), (95, 95)),
-    ((525, 531), (97, 97)),
-    ((532, 539), (98, 98)),
-    ((552, 556), (101, 101)),
-    ((558, 564), (103, 103)),
-    ((565, 572), (104, 104)),
-    ((585, 589), (107, 107)),
-    ((591, 597), (109, 109)),
-    ((598, 605), (110, 110)),
-    ((618, 622), (113, 113)),
-    ((624, 630), (115, 115)),
-    ((631, 638), (116, 116)),
-    ((651, 655), (119, 119)),
-    ((657, 663), (121, 121)),
-    ((664, 671), (122, 122)),
-    ((684, 688), (125, 125)),
-    ((690, 696), (127, 127)),
-    ((697, 704), (128, 128)),
-    ((717, 721), (131, 131)),
-    ((723, 729), (133, 133)),
-    ((730, 737), (134, 134)),
-    ((750, 754), (137, 137)),
-    ((756, 762), (139, 139)),
-    ((763, 770), (140, 140)),
-    ((783, 787), (143, 143)),
-    ((789, 795), (145, 145)),
-    ((796, 803), (146, 146)),
-    ((816, 820), (149, 149)),
-    ((822, 828), (151, 151)),
-    ((829, 836), (152, 152)),
-    ((849, 853), (155, 155)),
-    ((855, 861), (157, 157)),
-    ((862, 869), (158, 158)),
-    ((882, 886), (161, 161)),
-    ((888, 894), (163, 163)),
-    ((895, 902), (164, 164)),
-    ((915, 919), (167, 167)),
-    ((921, 927), (169, 169)),
-    ((928, 935), (170, 170)),
-    ((948, 952), (173, 173)),
-    ((954, 960), (175, 175)),
-    ((961, 968), (176, 176)),
-    ((981, 985), (179, 179)),
-    ((987, 993), (181, 181)),
-    ((994, 1001), (182, 182)),
-    ((1014, 1018), (185, 185)),
-    ((1020, 1026), (187, 187)),
-    ((1039, 1043), (190, 190)),
-    ((1045, 1051), (192, 192)),
-    ((1052, 1059), (193, 193)),
-    ((1072, 1076), (196, 196)),
-    ((1078, 1084), (198, 198)),
-    ((1097, 1101), (201, 201)),
-    ((1103, 1109), (203, 203)),
-    ((1110, 1117), (204, 204)),
-    ((1130, 1134), (207, 207)),
-    ((1136, 1142), (209, 209)),
-    ((1143, 1150), (210, 210)),
-    ((1163, 1167), (213, 213)),
-    ((1169, 1175), (215, 215)),
-    ((1176, 1183), (216, 216)),
-    ((1196, 1200), (219, 219)),
-    ((1202, 1208), (221, 221)),
-    ((1209, 1216), (222, 222)),
-    ((1229, 1233), (225, 225)),
-    ((1235, 1241), (227, 227)),
-    ((1242, 1249), (228, 228)),
-    ((1262, 1266), (231, 231)),
-    ((1268, 1274), (233, 233)),
-    ((1275, 1282), (234, 234)),
-    ((1295, 1299), (237, 237)),
-    ((1301, 1307), (239, 239)),
-    ((1308, 1315), (240, 240)),
-    ((1328, 1332), (243, 243)),
-    ((1334, 1340), (245, 245)),
-    ((1341, 1348), (246, 246)),
-    ((1361, 1365), (249, 249)),
-    ((1367, 1373), (251, 251)),
-    ((1374, 1381), (252, 252)),
-    ((1394, 1398), (255, 255)),
-    ((1400, 1406), (257, 257)),
-    ((1407, 1414), (258, 258)),
-    ((1427, 1431), (261, 261)),
-    ((1433, 1439), (263, 263)),
-    ((1440, 1447), (264, 264)),
-    ((1460, 1464), (267, 267)),
-    ((1466, 1472), (269, 269)),
-    ((1473, 1480), (270, 270)),
-    ((1493, 1497), (273, 273)),
-    ((1499, 1505), (275, 275)),
-    ((1506, 1513), (276, 276)),
-    ((1526, 1530), (279, 279)),
-    ((1532, 1538), (281, 281)),
-    ((1539, 1546), (282, 282)),
-    ((1559, 1563), (285, 285)),
-    ((1565, 1571), (287, 287)),
-    ((1572, 1579), (288, 288)),
-    ((1592, 1596), (291, 291)),
-    ((1598, 1604), (293, 293)),
-    ((1605, 1612), (294, 294)),
-    ((1625, 1629), (297, 297)),
-    ((1631, 1637), (299, 299)),
-    ((1638, 1645), (300, 300)),
-    ((1658, 1662), (303, 303)),
-    ((1664, 1670), (305, 305)),
-    ((1671, 1678), (306, 306)),
-    ((1691, 1695), (309, 309)),
-    ((1697, 1703), (311, 311)),
-    ((1704, 1711), (312, 312)),
-    ((1724, 1728), (315, 315)),
-    ((1730, 1736), (317, 317)),
-    ((1737, 1744), (318, 318)),
-    ((1757, 1761), (321, 321)),
-    ((1763, 1769), (323, 323)),
-    ((1770, 1777), (324, 324)),
-    ((1790, 1794), (327, 327)),
-    ((1796, 1802), (329, 329)),
-    ((1803, 1810), (330, 330)),
-    ((1823, 1827), (333, 333)),
-    ((1829, 1835), (335, 335)),
-    ((1836, 1843), (336, 336)),
-    ((1856, 1860), (339, 339)),
-    ((1862, 1868), (341, 341)),
-    ((1869, 1876), (342, 342)),
-    ((1889, 1893), (345, 345)),
-    ((1895, 1901), (347, 347)),
-    ((1902, 1909), (348, 348)),
-    ((1922, 1926), (351, 351)),
-    ((1928, 1934), (353, 353)),
-    ((1935, 1942), (354, 354)),
-    ((1955, 1959), (357, 357)),
-    ((1961, 1967), (359, 359)),
-    ((1968, 1975), (360, 360)),
-    ((1988, 1992), (363, 363)),
-    ((1994, 2000), (365, 365)),
-    ((2001, 2008), (366, 366)),
+    ((14, 18), (3, 3)),
+    ((20, 29), (5, 5)),
+    ((42, 46), (8, 8)),
+    ((48, 55), (10, 10)),
+    ((68, 72), (13, 13)),
+    ((74, 83), (15, 15)),
+    ((84, 91), (16, 16)),
+    ((92, 98), (17, 17)),
+    ((99, 105), (18, 18)),
+    ((118, 122), (27, 27)),
+    ((124, 131), (29, 29)),
+    ((132, 138), (30, 30)),
+    ((151, 155), (33, 33)),
+    ((157, 164), (35, 35)),
+    ((165, 172), (36, 36)),
+    ((173, 180), (37, 37)),
+    ((193, 197), (40, 40)),
+    ((199, 207), (42, 42)),
+    ((208, 216), (43, 43)),
+    ((229, 233), (46, 46)),
+    ((235, 243), (48, 48)),
+    ((244, 252), (49, 49)),
+    ((265, 269), (52, 52)),
+    ((271, 277), (54, 54)),
+    ((290, 294), (57, 57)),
+    ((296, 302), (59, 59)),
+    ((315, 319), (62, 62)),
+    ((321, 328), (64, 64)),
+    ((341, 345), (67, 67)),
+    ((347, 354), (69, 69)),
+    ((367, 371), (72, 72)),
+    ((373, 379), (74, 74)),
+    ((380, 387), (75, 75)),
+    ((400, 404), (78, 78)),
+    ((406, 412), (80, 80)),
+    ((413, 420), (81, 81)),
+    ((433, 437), (84, 84)),
+    ((439, 445), (86, 86)),
+    ((446, 453), (87, 87)),
+    ((466, 470), (90, 90)),
+    ((472, 478), (92, 92)),
+    ((479, 486), (93, 93)),
+    ((499, 503), (96, 96)),
+    ((505, 511), (98, 98)),
+    ((512, 519), (99, 99)),
+    ((532, 536), (102, 102)),
+    ((538, 544), (104, 104)),
+    ((545, 552), (105, 105)),
+    ((565, 569), (108, 108)),
+    ((571, 577), (110, 110)),
+    ((578, 585), (111, 111)),
+    ((598, 602), (114, 114)),
+    ((604, 610), (116, 116)),
+    ((611, 618), (117, 117)),
+    ((631, 635), (120, 120)),
+    ((637, 643), (122, 122)),
+    ((644, 651), (123, 123)),
+    ((664, 668), (126, 126)),
+    ((670, 676), (128, 128)),
+    ((677, 684), (129, 129)),
+    ((697, 701), (132, 132)),
+    ((703, 709), (134, 134)),
+    ((710, 717), (135, 135)),
+    ((730, 734), (138, 138)),
+    ((736, 742), (140, 140)),
+    ((743, 750), (141, 141)),
+    ((763, 767), (144, 144)),
+    ((769, 775), (146, 146)),
+    ((776, 783), (147, 147)),
+    ((796, 800), (150, 150)),
+    ((802, 808), (152, 152)),
+    ((809, 816), (153, 153)),
+    ((829, 833), (156, 156)),
+    ((835, 841), (158, 158)),
+    ((842, 849), (159, 159)),
+    ((862, 866), (162, 162)),
+    ((868, 874), (164, 164)),
+    ((875, 882), (165, 165)),
+    ((895, 899), (168, 168)),
+    ((901, 907), (170, 170)),
+    ((908, 915), (171, 171)),
+    ((928, 932), (174, 174)),
+    ((934, 940), (176, 176)),
+    ((941, 948), (177, 177)),
+    ((961, 965), (180, 180)),
+    ((967, 973), (182, 182)),
+    ((974, 981), (183, 183)),
+    ((994, 998), (186, 186)),
+    ((1000, 1006), (188, 188)),
+    ((1007, 1014), (189, 189)),
+    ((1027, 1031), (192, 192)),
+    ((1033, 1039), (194, 194)),
+    ((1052, 1056), (197, 197)),
+    ((1058, 1064), (199, 199)),
+    ((1065, 1072), (200, 200)),
+    ((1085, 1089), (203, 203)),
+    ((1091, 1097), (205, 205)),
+    ((1110, 1114), (208, 208)),
+    ((1116, 1122), (210, 210)),
+    ((1123, 1130), (211, 211)),
+    ((1143, 1147), (214, 214)),
+    ((1149, 1155), (216, 216)),
+    ((1156, 1163), (217, 217)),
+    ((1176, 1180), (220, 220)),
+    ((1182, 1188), (222, 222)),
+    ((1189, 1196), (223, 223)),
+    ((1209, 1213), (226, 226)),
+    ((1215, 1221), (228, 228)),
+    ((1222, 1229), (229, 229)),
+    ((1242, 1246), (232, 232)),
+    ((1248, 1254), (234, 234)),
+    ((1255, 1262), (235, 235)),
+    ((1275, 1279), (238, 238)),
+    ((1281, 1287), (240, 240)),
+    ((1288, 1295), (241, 241)),
+    ((1308, 1312), (244, 244)),
+    ((1314, 1320), (246, 246)),
+    ((1321, 1328), (247, 247)),
+    ((1341, 1345), (250, 250)),
+    ((1347, 1353), (252, 252)),
+    ((1354, 1361), (253, 253)),
+    ((1374, 1378), (256, 256)),
+    ((1380, 1386), (258, 258)),
+    ((1387, 1394), (259, 259)),
+    ((1407, 1411), (262, 262)),
+    ((1413, 1419), (264, 264)),
+    ((1420, 1427), (265, 265)),
+    ((1440, 1444), (268, 268)),
+    ((1446, 1452), (270, 270)),
+    ((1453, 1460), (271, 271)),
+    ((1473, 1477), (274, 274)),
+    ((1479, 1485), (276, 276)),
+    ((1486, 1493), (277, 277)),
+    ((1506, 1510), (280, 280)),
+    ((1512, 1518), (282, 282)),
+    ((1519, 1526), (283, 283)),
+    ((1539, 1543), (286, 286)),
+    ((1545, 1551), (288, 288)),
+    ((1552, 1559), (289, 289)),
+    ((1572, 1576), (292, 292)),
+    ((1578, 1584), (294, 294)),
+    ((1585, 1592), (295, 295)),
+    ((1605, 1609), (298, 298)),
+    ((1611, 1617), (300, 300)),
+    ((1618, 1625), (301, 301)),
+    ((1638, 1642), (304, 304)),
+    ((1644, 1650), (306, 306)),
+    ((1651, 1658), (307, 307)),
+    ((1671, 1675), (310, 310)),
+    ((1677, 1683), (312, 312)),
+    ((1684, 1691), (313, 313)),
+    ((1704, 1708), (316, 316)),
+    ((1710, 1716), (318, 318)),
+    ((1717, 1724), (319, 319)),
+    ((1737, 1741), (322, 322)),
+    ((1743, 1749), (324, 324)),
+    ((1750, 1757), (325, 325)),
+    ((1770, 1774), (328, 328)),
+    ((1776, 1782), (330, 330)),
+    ((1783, 1790), (331, 331)),
+    ((1803, 1807), (334, 334)),
+    ((1809, 1815), (336, 336)),
+    ((1816, 1823), (337, 337)),
+    ((1836, 1840), (340, 340)),
+    ((1842, 1848), (342, 342)),
+    ((1849, 1856), (343, 343)),
+    ((1869, 1873), (346, 346)),
+    ((1875, 1881), (348, 348)),
+    ((1882, 1889), (349, 349)),
+    ((1902, 1906), (352, 352)),
+    ((1908, 1914), (354, 354)),
+    ((1915, 1922), (355, 355)),
+    ((1935, 1939), (358, 358)),
+    ((1941, 1947), (360, 360)),
+    ((1948, 1955), (361, 361)),
+    ((1968, 1972), (364, 364)),
+    ((1974, 1980), (366, 366)),
+    ((1981, 1988), (367, 367)),
+    ((2001, 2005), (370, 370)),
+    ((2007, 2013), (372, 372)),
+    ((2014, 2021), (373, 373)),
 )

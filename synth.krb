@@ -1,20 +1,27 @@
 # synth.krb
+test_complete_module2
+  use acomplete_module2($index, $type1, $connected_module1, $type2, $connected_module2) 
+  when 
+    input_types_connections($index, $type1, $connected_module1, $type2, $connected_module2)
 
+test_pd_obj
+  use bcomplete_module2($index, $pd_object, $output_type)
+  when
+    pd_object($index, $pd_object, output_type)
 
 complete_module2
   use complete_module2($index, $type1, $connected_module1, $type2, $connected_module2, $pd_object, $gene_value, $output_type)
   when 
-    input_type($index, 1, $type1, $connected_module1)
-    input_type($index, 2, $type2, $connected_module2)
+    input_types_connections($index, $type1, $connected_module1, $type2, $connected_module2)
     pd_object($index, $pd_object, $output_type)
     synthesizer.gene_value($index, $gene_value)
     output_type($index, $type)
 
-param_in
-  use input_type($current_module, $input_index, $type, $connected_module)
-  when
-    synthesizer.connected($current_module, $input_index, $connected_module)
-    synthesizer.output_type($connected_module, $type)
+#param_in
+#  use input_type($current_module, $input_index, $type, $connected_module)
+#  when
+#    synthesizer.connected($current_module, $input_index, $connected_module)
+#    synthesizer.output_type($connected_module, $type)
 
 in_type
   use input_type($current_module, $input_index, $type, $connected_module)
@@ -88,49 +95,49 @@ ss0
 cc1
   use pd_object($index, '-', 'c')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 1)
     input_types($index, 'c', 'c')
 
 sc1
   use pd_object($index, '-~', 's')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 1)
     input_types($index, 's', 'c')
 
 cs1
   use pd_object($index, '-~', 's')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 1)
     input_types($index, 'c', 's')
 
 ss1
   use pd_object($index, '-~', 's')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 1)
     input_types($index, 's', 's')
 
 cc2
   use pd_object($index, '*', 'c')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 2)
     input_types($index, 'c', 'c')
 
 sc2
   use pd_object($index, '*~', 's')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 2)
     input_types($index, 's', 'c')
 
 cs2
   use pd_object($index, '*~', 's')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 2)
     input_types($index, 'c', 's')
 
 ss2
   use pd_object($index, '*~', 'c')
   when
-    synthesizer.gene_value($index, 0)
+    synthesizer.gene_value($index, 2)
     input_types($index, 's', 's')
 
 cc3

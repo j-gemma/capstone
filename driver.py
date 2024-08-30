@@ -55,7 +55,13 @@ pyke_engine.activate('synth')
 #print('Module {} input 1 has type {} from module {}, input 2 has type {} from module {}, Module {} pd object {} based on inputs and gene type {}, with output type {}.'.format(vars['index'], vars['type1'], vars['connected_module1'], vars['type2'], vars['connected_module2'], vars['index'], vars['pd_object'], vars['gene_type'], vars['output_type']))
 
 
-with pyke_engine.prove_goal('synth.complete_module2(8, $type1, $connected_module1, $type2, $connected_module2, $pd_object, $gene_type, $output_type)') as gen:
+with pyke_engine.prove_goal('synth.complete_module2($index, $type1, $connected_module1, $type2, $connected_module2, $pd_object, $gene_type, $output_type)') as gen:
   for vars, plan in gen:
-    print(len(vars)) 
-print('Module {} input 1 has type {} from module {}, input 2 has type {} from module {}, Module {} pd object {} based on inputs and gene type {}, with output type {}.'.format('8', vars['type1'], vars['connected_module1'], vars['type2'], vars['connected_module2'], '8', vars['pd_object'], vars['gene_type'], vars['output_type']))
+    print('Module {} input 1 has type {} from module {}, input 2 has type {} from module {}, Module {} pd object {} based on inputs and gene type {}, with output type {}.'.format(vars['index'], vars['type1'], vars['connected_module1'], vars['type2'], vars['connected_module2'], vars['index'], vars['pd_object'], vars['gene_type'], vars['output_type']))
+
+#with pyke_engine.prove_goal('synth.pd_object($index, $pd_object, $output_type)') as gen:
+#  for vars, plan in gen:
+#    print(str(vars['index']) + ': ' + vars['pd_object'] + ', ' + vars['output_type'])
+
+
+
