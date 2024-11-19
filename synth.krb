@@ -1,8 +1,8 @@
 # synth.krb
-test_complete_module2
-  use acomplete_module2($index, $type1, $connected_module1, $type2, $connected_module2) 
-  when 
-    input_types_connections($index, $type1, $connected_module1, $type2, $connected_module2)
+#test_complete_module2
+#  use acomplete_module2($index, $type1, $connected_module1, $type2, $connected_module2) 
+#  when 
+#    input_types_connections($index, $type1, $connected_module1, $type2, $connected_module2)
 
 test_pd_obj
   use bcomplete_module2($index, $pd_object, $output_type)
@@ -68,6 +68,7 @@ signal_out
   when
     pd_object($index, $id, 's')
 
+#definitions for module output type based on its input types
 cc0
   use pd_object($index, '+', 'c')
   when
