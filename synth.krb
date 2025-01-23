@@ -1,4 +1,5 @@
-# synth.krb
+#synth.krb
+
 #test_complete_module2
 #  use acomplete_module2($index, $type1, $connected_module1, $type2, $connected_module2) 
 #  when 
